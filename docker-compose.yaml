@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  order:
+    # build: order-service
+    image: imrenagi/order-service:latest
+    environment: 
+      PAYMENT_SERVICE_HOST: "payment:8080"
+    ports:        
+      - "80:8081"
+    depends_on:
+      - payment 
+  payment:
+    # build: payment-service
+    image: imrenagi/payment-service:v1
+    environment: 
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: payment
+      POSTGRES_USER: payment
+      POSTGRES_PASSWORD: payment
+      COUNTRY_CODE: id
+    # ports:        
+    #   - "8080:8080"
+    depends_on:
+      - postgres
+    restart: always
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_DB: payment
+      POSTGRES_USER: payment
+      POSTGRES_PASSWORD: payment
+    # expose:
+    #   - "5432"
+    # ports:
+    #   - "5432:5432"
+    restart: always
