@@ -1,8 +1,8 @@
 version: '3.9'
 services:
   order:
-    # build: order-service
-    image: imrenagi/order-service:latest
+    build: order-service
+    # image: imrenagi/order-service:latest
     environment: 
       PAYMENT_SERVICE_HOST: "payment:8080"
     ports:        
@@ -10,8 +10,8 @@ services:
     depends_on:
       - payment 
   payment:
-    # build: payment-service
-    image: imrenagi/payment-service:v1
+    build: payment-service
+    # image: imrenagi/payment-service:v1
     environment: 
       POSTGRES_HOST: postgres
       POSTGRES_DB: payment
